@@ -3,7 +3,7 @@ name = "fuel-price-pipeline"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
-    "databricks-sdk>=0.146.0",
-    "dbt-databricks>=1.7.3",
+    "databricks-sdk",
+    "dbt-databricks>=1.10",
     "requests>=2.34.2",
 ]
