@@ -30,3 +30,5 @@ clean-targets: # directories to be removed by `dbt clean`
 models:
   fuel_dbt:
     +materialized: table
+    reporting:
+      +schema: reporting
