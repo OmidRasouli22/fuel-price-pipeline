@@ -1,12 +1,12 @@
 from databricks.sdk import WorkspaceClient
+import requests
+import io
+from datetime import datetime, timezone
 
 w = WorkspaceClient()
 # access the secret from the Databricks secret scope
 api_key = w.dbutils.secrets.get(scope="fuel", key="TANKERKOENIG_API_KEY")
 
-import requests
-
-import requests
 
 response = requests.get(
     "https://creativecommons.tankerkoenig.de/json/list.php",
@@ -26,8 +26,6 @@ if not payload.get("ok"):
     raise RuntimeError(payload.get("message"))
 
 # write the raw response to the landing volume
-import io
-from datetime import datetime, timezone
 
 now = datetime.now(timezone.utc)
 path = f"/Volumes/fuel/raw/landing/prices/{now:%Y-%m-%d}/{now:%H%M%S}.json"
