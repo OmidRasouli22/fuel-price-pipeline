@@ -1,0 +1,11 @@
+bundle:
+  name: fuel_price_pipeline
+
+include:
+  - resources/*.yml
+
+targets:
+  prod:
+    default: true
+    workspace:
+      host: https://dbc-1fc97fa0-9e6f.cloud.databricks.com

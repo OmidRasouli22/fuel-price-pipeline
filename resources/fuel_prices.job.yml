@@ -1,0 +1,75 @@
+resources:
+  jobs:
+    fuel_prices:
+      name: fuel_prices
+      tasks:
+        - task_key: fetch_prices
+          disabled: false
+          email_notifications: {}
+          environment_key: Default
+          run_if: ALL_SUCCESS
+          spark_python_task:
+            python_file: ingestion/fetch_prices.py
+            source: GIT
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: load_raw
+          depends_on:
+            - task_key: fetch_prices
+          disabled: false
+          email_notifications: {}
+          environment_key: Default
+          run_if: ALL_SUCCESS
+          spark_python_task:
+            python_file: ingestion/load_raw.py
+            source: GIT
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: dbt_build
+          depends_on:
+            - task_key: load_raw
+          dbt_task:
+            catalog: fuel
+            commands:
+              - dbt build
+            project_directory: fuel_dbt
+            schema: cleaned
+            source: GIT
+            warehouse_id: fcd194360062ee78
+          disabled: false
+          email_notifications: {}
+          environment_key: dbt-default
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+        on_failure:
+          - omidrasouli1998@gmail.com
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "6"
+        - environment_key: dbt-default
+          spec:
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0
+            environment_version: "6"
+      git_source:
+        git_branch: main
+        git_provider: gitHub
+        git_url: https://github.com/OmidRasouli22/fuel-price-pipeline.git
+      max_concurrent_runs: 1
+      notification_settings:
+        no_alert_for_canceled_runs: false
+        no_alert_for_skipped_runs: false
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      trigger:
+        pause_status: UNPAUSED
+        periodic:
+          interval: 1
+          unit: HOURS
+      webhook_notifications: {}
