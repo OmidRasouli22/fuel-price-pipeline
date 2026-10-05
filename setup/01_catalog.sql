@@ -3,3 +3,4 @@ CREATE SCHEMA IF NOT EXISTS fuel.raw;
 CREATE SCHEMA IF NOT EXISTS fuel.cleaned;
 CREATE SCHEMA IF NOT EXISTS fuel.reporting;
 CREATE VOLUME IF NOT EXISTS fuel.raw.landing;
+CREATE VOLUME IF NOT EXISTS fuel.raw.checkpoints;
