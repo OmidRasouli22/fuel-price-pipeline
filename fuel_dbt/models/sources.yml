@@ -6,3 +6,5 @@ sources:
     schema: raw
     tables:
       - name: prices
+      - name: history_prices
+      - name: history_stations
