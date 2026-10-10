@@ -1,0 +1,50 @@
+resources:
+  jobs:
+    fuel_history:
+      name: fuel_history
+      tasks:
+        - task_key: fetch_history
+          environment_key: Default
+          spark_python_task:
+            python_file: ingestion/fetch_history.py
+            source: GIT
+        - task_key: load_history
+          depends_on:
+            - task_key: fetch_history
+          environment_key: Default
+          spark_python_task:
+            python_file: ingestion/load_history.py
+            source: GIT
+        - task_key: dbt_build
+          depends_on:
+            - task_key: load_history
+          environment_key: dbt-default
+          dbt_task:
+            catalog: fuel
+            schema: cleaned
+            commands:
+              - dbt build --select price_changes station_history
+            project_directory: fuel_dbt
+            source: GIT
+            warehouse_id: fcd194360062ee78
+      email_notifications:
+        on_failure:
+          - omidrasouli1998@gmail.com
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "6"
+        - environment_key: dbt-default
+          spec:
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0
+            environment_version: "6"
+      git_source:
+        git_branch: main
+        git_provider: gitHub
+        git_url: https://github.com/OmidRasouli22/fuel-price-pipeline.git
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 0 8 * * ?"
+        timezone_id: Europe/Berlin
+        pause_status: UNPAUSED
