@@ -31,7 +31,7 @@ resources:
           dbt_task:
             catalog: fuel
             commands:
-              - dbt build --exclude price_changes station_history
+              - dbt build --exclude price_changes+ station_history+
             project_directory: fuel_dbt
             schema: cleaned
             source: GIT

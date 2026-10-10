@@ -23,7 +23,7 @@ resources:
             catalog: fuel
             schema: cleaned
             commands:
-              - dbt build --select price_changes station_history
+              - dbt build --select price_changes+ station_history+
             project_directory: fuel_dbt
             source: GIT
             warehouse_id: fcd194360062ee78
