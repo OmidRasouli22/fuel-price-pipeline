@@ -47,4 +47,4 @@ resources:
       schedule:
         quartz_cron_expression: "0 0 8 * * ?"
         timezone_id: Europe/Berlin
-        pause_status: UNPAUSED
+        pause_status: PAUSED
