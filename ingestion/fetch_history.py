@@ -16,8 +16,12 @@ auth = (
     w.dbutils.secrets.get("fuel", "tankerkoenig_api_key"),
 )
 
-start = date.fromisoformat(sys.argv[1])
-end = date.fromisoformat(sys.argv[2])
+if len(sys.argv) > 2:
+    start = date.fromisoformat(sys.argv[1])
+    end = date.fromisoformat(sys.argv[2])
+else:
+    end = date.today() - timedelta(days=1)
+    start = end - timedelta(days=6)
 
 day = start
 while day <= end:
