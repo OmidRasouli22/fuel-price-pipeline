@@ -2,7 +2,8 @@ version: 2
 
 sources:
   - name: raw
-    database: fuel
+    # fuel on Databricks; local Spark in the tests has no catalogs
+    database: "{{ 'fuel' if target.type == 'databricks' else 'raw' }}"
     schema: raw
     tables:
       - name: prices

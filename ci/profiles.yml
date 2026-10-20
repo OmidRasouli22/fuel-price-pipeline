@@ -1,0 +1,10 @@
+# Used only by the tests: runs the dbt models on a local Spark session
+# instead of Databricks.
+fuel_dbt:
+  target: ci
+  outputs:
+    ci:
+      type: spark
+      method: session
+      host: localhost
+      schema: cleaned

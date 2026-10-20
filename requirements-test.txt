@@ -1,0 +1,6 @@
+# For the tests in tests/ (local Spark instead of Databricks)
+dbt-core==1.12.6
+dbt-spark[session]==1.11.0
+pyspark==4.2.0
+pytest
+ruff

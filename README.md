@@ -67,6 +67,20 @@ so it becomes null.
 - prices outside 1 to 3 euros raise a warning, not an error, because
   they can be real
 
+The same models also run on every push in GitHub Actions, without
+Databricks. `tests/test_dbt_models.py` starts a local Spark session,
+fills the raw tables with a small hand-made dataset, runs `dbt build` on
+it, and then checks the results. For example, that a station which
+changed its brand gets two versions, and that a price at 23:30 UTC
+counts for the next day in Germany.
+
+```
+pip install -r requirements-test.txt
+pytest
+```
+
+You need Java for Spark.
+
 ## Jobs
 
 Both jobs are defined in `resources/` as a Databricks Asset Bundle and

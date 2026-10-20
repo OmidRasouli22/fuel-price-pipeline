@@ -7,3 +7,9 @@ dependencies = [
     "dbt-databricks>=1.10",
     "requests>=2.34.2",
 ]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F"]
