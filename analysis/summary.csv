@@ -1,0 +1,8 @@
+metric,value
+first_day,2026-08-10
+last_day,2026-10-09
+stations,15092
+price_changes,12805490
+changes_per_station_per_day,14.4
+avg_daily_e5_spread_eur,0.169
+station_days_in_spread,881583
